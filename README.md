@@ -5,7 +5,7 @@ Quick python (script?) that checks the price of your MyFigureCollection collecti
 ## Usage
 - Download the .py file
 - Change the username to your own :) 
-- Open your command line, run ``python mfc-price-checker.py`` in whatever directory you saved the .py file in
+- Open your command line, run ``python mfc-price-checker.py [username]`` in whatever directory you saved the .py file in. ``username`` is an optional command line argument; supply your own username!
 Enjoy~
 
 ### TODO
