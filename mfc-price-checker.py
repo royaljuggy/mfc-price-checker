@@ -3,8 +3,13 @@ from bs4 import BeautifulSoup
 from yen_parser import parse_yen
 from currency_converter import CurrencyConverter
 
+import sys
 # constants
-username = "SkillSwap"
+if (len(sys.argv) == 2): # first arg is program name
+    username = sys.argv[1]
+else:
+    username = "SkillSwap"
+
 ROOT_URL = "https://myfigurecollection.net"
 
 # variables
@@ -14,6 +19,7 @@ num_items = 0
 num_prizes = 0
 
 # scrape user info page
+# TODO - the following only shows the first 40 figures for an individual! Fix this!
 URL = ROOT_URL + "/profile/" + username
 page = requests.get(URL)
 
