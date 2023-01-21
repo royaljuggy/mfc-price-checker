@@ -1,5 +1,5 @@
-# mfc-price-checker
-Quick python (script?) that checks the price of your MyFigureCollection collection. https://myfigurecollection.net/
+# MyFigureCollection Price Checker
+Quick python (script?) that checks the price of your MyFigureCollection collection (all figures, goods, items are included). https://myfigurecollection.net/
 
 ## Requirements
 Must have Python downloaded (for Windows: add it to your path!)
