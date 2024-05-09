@@ -12,8 +12,8 @@ def main():
     if (len(sys.argv) == 2): # first arg is program name
         username = sys.argv[1]
     else:
-        print("Please enter a user name!")
-        return
+        print("Please enter a username!")
+	return
     
     # global variables 
     # TODO - is there a better syntax?
@@ -31,31 +31,39 @@ def main():
     URL = ROOT_URL + "/profile/" + username + "/collection/"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
-    
     # click into full figure collection view
     subtabs = soup.findAll("a", class_="nav-page")
-    for subtab in subtabs:
-        
-        URL = subtab.get("href").replace("amp;", "")
-        page = requests.get(URL)
-        newsoup = BeautifulSoup(page.content, "html.parser")
-        
-        # scrape a page full of figure prices
-        while True:
-            stats = scrape_page(newsoup)
-            no_price_counter += stats[0]
-            cost_in_yen += stats[1]
-            num_items += stats[2]
-            num_prizes += stats[3]
 
-            # get next page of figures
-            URL = soup.find("a", class_="nav-next")
-            if URL == None:
-                break
-            else:
-                URL = URL.get("href")
+    if len(subtabs) == 0:
+        # Only one page of items
+        stats = scrape_page(soup)
+        no_price_counter += stats[0]
+        cost_in_yen += stats[1]
+        num_items += stats[2]
+        num_prizes += stats[3] 
+    else:
+        for subtab in subtabs:
+            
+            URL = subtab.get("href").replace("amp;", "")
             page = requests.get(URL)
-            soup = BeautifulSoup(page.content, "html.parser")
+            newsoup = BeautifulSoup(page.content, "html.parser")
+            
+            # scrape a page full of figure prices
+            while True:
+                stats = scrape_page(newsoup)
+                no_price_counter += stats[0]
+                cost_in_yen += stats[1]
+                num_items += stats[2]
+                num_prizes += stats[3]
+
+                # get next page of figures
+                URL = soup.find("a", class_="nav-next")
+                if URL == None:
+                    break
+                else:
+                    URL = URL.get("href")
+                page = requests.get(URL)
+                soup = BeautifulSoup(page.content, "html.parser")
 
     # Print statistics, convert from yen to cad
     c = CurrencyConverter()
